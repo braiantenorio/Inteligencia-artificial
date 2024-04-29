@@ -21,14 +21,8 @@ sufijo(Sufijo, Lista) :-
     append(_, Sufijo, Lista).
 
 
+X en [X|_].
+X en [_|Y] :- X en Y.
 
-  %X en [X|_].
-%X en [_|Y] :- X en Y.
 
-
-%consulta_en(X, Lista) :-
-%    X en Lista.
-
-consulta_concatenar(L1, L2, Lista) :-
-    concatenar L1 con  L2 produce Lista.
 
