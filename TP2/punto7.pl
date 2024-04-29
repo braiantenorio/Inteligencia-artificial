@@ -1,6 +1,6 @@
-list([]).
+lista([]).
 lista([X|R]) :- lista(R).
 
-conc([],L2L2)
-conc(L1,[],L1)
-conc([X|R], L, [X|Z]) :- conc(R,L,Z)a
+concatenar([],L2,L2).
+concatenar(L1,[],L1).
+concatenar([X|R], L, [X|Z]) :- concatenar(R,L,Z).
