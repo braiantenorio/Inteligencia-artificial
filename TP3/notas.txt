@@ -1,0 +1,16 @@
+definir arcos
+
+arco(a,b)
+arco(b,c).
+arco(c,a)
+
+tener cuidado con los bucles infinitos en ambos algoritmos
+
+
+estan ambos algoritmos en el pdf
+
+
+
+
+
+en el punto 9 no tener en cuenta los numeros
