@@ -10,7 +10,14 @@ tener cuidado con los bucles infinitos en ambos algoritmos
 estan ambos algoritmos en el pdf
 
 
-
-
-
 en el punto 9 no tener en cuenta los numeros
+
+
+serian 5 transiciones de ida y 5 de vuelta
+
+
+2M 0C 
+0M 2C 
+1M 1C 
+1M 0C 
+0M 1C

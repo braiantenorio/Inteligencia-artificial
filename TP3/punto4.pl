@@ -1,24 +1,24 @@
-resolver(Nodo, Solucion):-breadthfirst([[Nodo]], Solucion).
+buscar(Frontera, Solucion):-breadthfirst([[Frontera]], Solucion).
 
-breadthfirst([[Nodo|Camino]|_], [Nodo|Camino]):- final(Nodo).
+breadthfirst([[Frontera|Camino]|_], [Frontera|Camino]):- final(Frontera).
 breadthfirst([Camino|Caminos], Solucion):- extender(Camino, NCaminos), append(Caminos, NCaminos, Caminos1), 
 breadthfirst(Caminos1, Solucion).
 
-extender([Nodo|Camino], NCaminos):- bagof([NNodo, Nodo|Camino], 
-  (transicion(Nodo,NNodo), not(member(NNodo,[Nodo|Camino]))), NCaminos), writeln(NNodo), !.
+extender([Frontera|Camino], NCaminos):- bagof([NNodo, Frontera|Camino], 
+  (transicion(Frontera,NNodo), not(member(NNodo,[Frontera|Camino]))), NCaminos), writeln(NNodo), !.
 
 extender(Camino, []).
 
 
 
 % Arbol
-transicion(a,c).
-transicion(c,i).
-transicion(i,salida).
 transicion(a,b).
+transicion(a,c).
 transicion(b,d).
 transicion(b,e).
 transicion(e,g).
 transicion(e,f).
+transicion(c,i).
+transicion(i,salida).
 transicion(g,salida).
 final(salida).
