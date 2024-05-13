@@ -1,0 +1,32 @@
+que en ambas islas no haya mas canibales que misioneros siempre que haya mas de 0 misioneros
+
+
+identificar movimientos posibles
+
+4 transiciones de ida y 4 de vuelta (como 1 canibal y 1 misionero o 2 canibales y 0 misioneros)
+
+
+el arco seria el movimiento
+
+
+
+el bote lleva hasta 2 personas
+
+
+inicial:
+
+
+isla 1: 3M 3C 
+isla 2: 0M 0C 
+
+
+en prolog definir
+
+es inicial
+es final
+transiciones (genericas)
+
+
+en draw io ir poniendo en rojo los nodos que ya fallan digamos.
+
+
