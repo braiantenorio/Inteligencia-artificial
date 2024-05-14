@@ -1,24 +1,17 @@
 que en ambas islas no haya mas canibales que misioneros siempre que haya mas de 0 misioneros
 
-
 identificar movimientos posibles
 
 4 transiciones de ida y 4 de vuelta (como 1 canibal y 1 misionero o 2 canibales y 0 misioneros)
 
-
 el arco seria el movimiento
-
-
 
 el bote lleva hasta 2 personas
 
 
 inicial:
-
-
 isla 1: 3M 3C 
 isla 2: 0M 0C 
-
 
 en prolog definir
 
@@ -26,7 +19,52 @@ es inicial
 es final
 transiciones (genericas)
 
-
 en draw io ir poniendo en rojo los nodos que ya fallan digamos.
 
+serian 5 transiciones de ida y 5 de vuelta
 
+2M 0C 
+0M 2C 
+1M 1C 
+1M 0C 
+0M 1C
+
+5 movimientos
+
+despues de cada movimiento hay que controlar que no haya más canibales de misioneros
+
+estado inicial
+estado final
+mov o transiciones
+alg de busqueda
+
+10 posibles movimientos. 5 de ida y 5 de vuelta
+
+
+ejemplo representa el lado izquierdo
+
+
+
+candidad de canibales o misiones del lado izquierdo
+B para ver en que lado esta el bote
+estado(CMI,CCI,B)
+
+la i en minuscula por que es constante
+inicio(estado(3,3,i))
+fin(estado(0,0,d))
+
+% aca movemos el bote de izquierda a derecha entonces serian 10
+
+mover(estado(CMI,CCI,i),estado(nuevoCMI, nuevoCCI, d)) :-  % cruzo 1M y 1C
+  nuevoCMI is CMI-1,
+  nuevoCCI is CCI-1,
+  not(peligro(estado(nuevoCMI,nuevoCCI,_))),
+  CMI>0,
+  CCI>0
+
+***** una opcion es estado(CMI,CCI,CMD,CCD,B)
+** mejor la otra xd
+
+peligro CM<CC y CM!=0
+
+CM>CC y CM!=3
