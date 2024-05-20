@@ -40,10 +40,7 @@ alg de busqueda
 
 10 posibles movimientos. 5 de ida y 5 de vuelta
 
-
-ejemplo representa el lado izquierdo
-
-
+ESTE ejemplo representa solo el lado izquierdo
 
 candidad de canibales o misiones del lado izquierdo
 B para ver en que lado esta el bote
