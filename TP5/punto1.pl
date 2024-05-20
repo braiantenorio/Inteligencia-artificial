@@ -1,6 +1,6 @@
-o --> fn(_,N),fv(N).
+o --> fn(_,N),fv(_,N).
 fn(G,N) --> art(G,N),sust(G,N); nombre(G,N).
-fv(N) --> verbo(N),sust(G,N).
+fv(G,N) --> verbo(N),sust(G,N).
 
 sust(fem,plu) --> [casas];[mesas].
 sust(masc,sing) --> [gato];[libro];[disco];[mundo];[pescado].
