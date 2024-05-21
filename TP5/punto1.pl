@@ -1,5 +1,5 @@
 o --> fn(_,N),fv(_,N).
-fn(G,N) --> art(G,N),sust(G,N); nombre(G,N).
+fn(G,N) --> art(G,N),sust(G,N).
 fv(G,N) --> verbo(N),sust(G,N).
 
 sust(fem,plu) --> [casas];[mesas].
@@ -13,7 +13,3 @@ art(masc,plu) --> [los];[unos].
 art(fem,sing) --> [la];[una].
 art(masc,sing) --> [el];[uno].
 
-nombre(masc,sing) --> [juan];[mario].
-nombre(fem,sing) --> [maria];[julia].
-
-prep --> [a];[con].

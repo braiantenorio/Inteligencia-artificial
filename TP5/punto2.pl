@@ -1,18 +1,19 @@
-o(o(FN,FV)) --> fn(FN,_,N),fv(FV,N).
+o --> fn(_,_),fv(_).
+fn(G,N) --> art(G,N),sust(G,N).
+fv(N) --> verbo(N),fp(_,N).
+fp(G,N) --> det(G,N),sust(G,N).
 
-fn(fn(A,S),G,N) --> art(A,G,N),sust(S,G,N).
-fn(fn(Nom),G,N) --> nombre(Nom,G,N).
-fv(fv(V,FP),N) --> verbo(V,N),fp(FP,_,_).
-fp(fp(P,FN),G,N) --> prep(P),fn(FN,G,N).
+sust(fem,plu) --> [casas];[mesas];[profesoras].
+sust(masc,sing) --> [gato];[libro];[disco];[mundo];[profesor].
+sust(masc,plu) --> [profesores].
 
-sust(sust(casa),fem,sing) --> [casa].
-sust(sust(mesa),fem,sing) --> [mesa].
+verbo(sing) --> [lee];[corre];[escribe];[toma].
+verbo(plu) --> [leen];[corren];[escriben];[toman].
 
-nombre(nombre(pedro),masc,sing) --> [pedro].
-nombre(nombre(eduardo),masc,sing) --> [eduardo].
+art(masc,plu) --> [los];[unos].
+art(fem,sing) --> [la];[una].
 
-verbo(verbo(mueve),sing) --> [mueve].
-verbo(verbo(corre),sing) --> [corre].
-
-
+det(masc,sing) --> [un].
+det(masc,plu) --> [unos].
+det(fem,sing) --> [una].
 
