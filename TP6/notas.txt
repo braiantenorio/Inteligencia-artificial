@@ -1,0 +1,23 @@
++ y - son de entrada y salida
+
+
+utilidad de los nodos hojas
+-1 perdedor
+1 ganador
+0 empate
+
+juega max y min hasta llegar a un nodo hoja y ahi aplico la funcion de utilidad
+(la de arriba) (n) se calcula en el nodo hoja
+
+min busca el valor minimo
+max el valor maximo
+
+estrategia de busqueda de suma 0, de 2 jugadores
+
+
+podemos implementar el tablero como una lista de 9 posiciones.
+si max es X o O lo elijo yo
+
+podemos representar X como 1 y O como 0
+
+
