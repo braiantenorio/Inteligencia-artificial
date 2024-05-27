@@ -1,6 +1,5 @@
 + y - son de entrada y salida
 
-
 utilidad de los nodos hojas
 -1 perdedor
 1 ganador
@@ -14,10 +13,57 @@ max el valor maximo
 
 estrategia de busqueda de suma 0, de 2 jugadores
 
-
 podemos implementar el tablero como una lista de 9 posiciones.
 si max es X o O lo elijo yo
 
 podemos representar X como 1 y O como 0
 
 se juega contra la maquina administrar entrada
+
+###### 27/5 #######
+
+tablero =[0,0,x,O,0,0,x,0,O]
+
+inicio
+  llenar el tablero con ceros
+  preguntar al usuario que elija ficha
+  - el usuario eligió x entonces empieza a jugar, si no la maquina
+  (Cuando juega la maquina llamamos al algoritmo minimax)
+  esto se repite hasta que lleguemos a un nodo hoja
+
+
+Pos -> [jugador, estado, tablero]
+          X1      play    
+         x o 
+
+X1,X2 es x y o
+proxPos = [X2,estado, nuevotablero]
+                      []
+% el move que lleve a un estado ganador
+% son 4, uno que lleva a ademas a play, perdedor y empate
+move([X1,play,Tablero],[X2,win,NuevoTablero]):-
+  proximoJugador(X1,X2), %ver que ficha juega
+  movAux(X1,Tablero,NuevoTablero), %
+  posGanadora(X1,NuevoTablero), !. %para saber si este movimiento me llevo a un estado ganador
+  %en el mov play no poner nada
+  %en el mov lose poner posPerdedora
+
+posGanadora(J, [X1,X2,X3,X4,X5,X6,X7,X8,X9]):-
+  igual(X1,X2,X3,J);
+  % todas las combinaciones 
+  % ...
+
+movAux(J,[0|R],[J|R]).
+movAux(J,[C|R],[C,R2]):- movAux(J,R,R2)
+
+proxJugador(x,o).
+proxJugador(o,x).
+
+min_to_move([o,_,_]).  %indica verdadero si el jugador siguiente es min
+
+max_to_move([x,_,_]).
+
+utility([o,win,_],1). % el jugador anterior max ha ganado
+utility([x,win,_],1). % gano el otro por que le paso la nextPos, osea que gano el anterio
+utility([_,draw,_],0). % empate
+
