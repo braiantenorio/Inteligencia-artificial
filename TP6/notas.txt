@@ -20,4 +20,4 @@ si max es X o O lo elijo yo
 
 podemos representar X como 1 y O como 0
 
-
+se juega contra la maquina administrar entrada
