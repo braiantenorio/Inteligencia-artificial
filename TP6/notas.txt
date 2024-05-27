@@ -67,3 +67,6 @@ utility([o,win,_],1). % el jugador anterior max ha ganado
 utility([x,win,_],1). % gano el otro por que le paso la nextPos, osea que gano el anterio
 utility([_,draw,_],0). % empate
 
+% dice que utility para perdedor no se necesita
+
+
