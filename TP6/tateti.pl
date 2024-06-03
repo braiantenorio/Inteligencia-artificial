@@ -22,35 +22,95 @@ betterOf(Pos0, Val0, _, Val1, Pos0, Val0) :-   % Pos0 better than Pos1
 
 betterOf(_, _, Pos1, Val1, Pos1, Val1).        % Otherwise Pos1 better than Pos0
 
-%[X1,X2...Xn]
-%como definimos pos?
+play :- preguntarFicha.
+
+preguntarFicha:- nl, write('Elija ficha (x u o)'), nl,
+  read(Jugador), nl,
+  TableroInicial = [0,0,0,0,0,0,0,0,0],
+  play([x,play,TableroInicial],Jugador).
+
+play([Jugador, play, Tablero], Jugador) :- !,
+    nl, write('Next move ?'), nl,
+    read(Pos), nl,  
+    (
+      movJugador([Jugador, play, Tablero], [ProximoJugador, Estado, NuevoTablero], Pos), !,
+      show(NuevoTablero),
+      (
+        Estado = win, !,                             % If Player win -> stop
+        nl, write('End of game : '),
+        write(Jugador), write(' win !'), nl, nl
+        ;
+        Estado = draw, !,                            % If draw -> stop
+        nl, write('End of game : '),
+        write(' draw !'), nl, nl
+        ;
+        play([ProximoJugador, play, NuevoTablero], Jugador) % Else -> continue the game
+      )
+      ;
+      write('-> Bad Move !'), nl,                % If humanMove fail -> bad move
+      play([Jugador, play, Tablero], Jugador)        % Ask again
+    ).
+
+play([Player, play, Board], HumanPlayer) :-
+    nl, write('Computer play : '), nl, nl,
+    % Compute the best move
+    bestMove([Player, play, Board], [NextPlayer, State, BestSuccBoard]),
+    show(BestSuccBoard),
+    (
+      State = win, !,                                 % If Player win -> stop
+      nl, write('End of game : '),
+      write(Player), write(' win !'), nl, nl
+      ;
+      State = draw, !,                                % If draw -> stop
+      nl, write('End of game : '), write(' draw !'), nl, nl
+      ;
+      % Else -> continue the game
+      play([NextPlayer, play, BestSuccBoard], HumanPlayer)
+    ).
+
+bestMove(Pos, NextPos) :-
+    minimax(Pos, NextPos, _).
+  
+movJugador([X1, play, Tablero], [X2, Estado, NuevoTablero], Pos) :-
+    proxJugador(X1, X2),
+    set1(Pos, X1, Tablero, NuevoTablero),
+    (
+      posGanadora(X1, NuevoTablero), !, Estado = win ;
+      posEmpate(X1,NuevoTablero), !, Estado = draw ;
+      Estado = play
+    ).
+
+set1(1, E, [X|Ls], [E|Ls]) :- !, X = 0.
+
+set1(P, E, [X|Ls], [X|L2s]) :-
+    number(P),
+    P1 is P - 1,
+    set1(P1, E, Ls, L2s).
+
 % dice que NextPos es un movimiento legal desde Pos
 %move(Pos, NextPos):-.
 % el move que lleve a un estado ganador
 % son 4, uno que lleva a ademas a play, perdedor y empate
 move([X1,play,Tablero],[X2,win,NuevoTablero]):-
-  proximoJugador(X1,X2), %ver que ficha juega
+  proxJugador(X1,X2), %ver que ficha juega
   movAux(X1,Tablero,NuevoTablero), %
   posGanadora(X1,NuevoTablero), !. %para saber si este movimiento me llevo a un estado ganador
-  %en el mov play no poner nada
-  %en el mov lose poner posPerdedora
 
 move([X1, play, Tablero], [X2, draw, NuevoTablero]):-
-  proximoJugador(X1,X2),
-  movAux(X1,Tablero,NuevoTablero),!. %va este cut???
-
-move([X1,play,Tablero], [X2, lose, NuevoTablero]):-
-  proximoJugador(X1,X2),
+  proxJugador(X1,X2),
   movAux(X1,Tablero,NuevoTablero),
-  % falta definir posPerdedora
-  posPerdedora(X1,NuevoTablero),!.
+  posEmpate(X1,NuevoTablero),!.
+
+move([X1,play,Tablero], [X2, play, NuevoTablero]):-
+  proxJugador(X1,X2),
+  movAux(X1,Tablero,NuevoTablero).
 
 movAux(J,[0|R],[J|R]).
-movAux(J,[C|R],[C,R2]):- movAux(J,R,R2).
+movAux(J,[C|R],[C|R2]):- movAux(J,R,R2).
 
 % dice que Pos tiene un valor igual a Val
 utility([o,win,_],1).
-utility([x,win,_],1). % 1 o -1?????
+utility([x,win,_],-1). 
 utility([_,draw,_],0).
 
 % dice que el jugador actual que esta en la Pos es min
@@ -69,9 +129,34 @@ posGanadora(J, [X1,X2,X3,X4,X5,X6,X7,X8,X9]):-
   igual(X2,X5,X8,J);
   igual(X3,X6,X9,J).
 
+posEmpate(_,Tablero):- \+ member(0,Tablero).
+
 igual(J,J,J,J).
 
 proxJugador(x,o).
 proxJugador(o,x).
 
+show([X1, X2, X3, X4, X5, X6, X7, X8, X9]) :-
+    write('   '), showAux(X1),
+    write(' | '), showAux(X2),
+    write(' | '), showAux(X3), nl,
+    write('  -----------'), nl,
+    write('   '), showAux(X4),
+    write(' | '), showAux(X5),
+    write(' | '), showAux(X6), nl,
+    write('  -----------'), nl,
+    write('   '), showAux(X7),
+    write(' | '), showAux(X8),
+    write(' | '), showAux(X9), nl.
 
+
+
+% show2(+Term)
+% Write the term to current outupt
+% Replace 0 by ' '.
+showAux(X) :-
+    X = 0, !,
+    write(' ').
+
+showAux(X) :-
+    write(X).
