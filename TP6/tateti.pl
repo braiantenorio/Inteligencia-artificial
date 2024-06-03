@@ -30,39 +30,37 @@ preguntarFicha:- nl, write('Elija ficha (x u o)'), nl,
   play([x,play,TableroInicial],Jugador).
 
 play([Jugador, play, Tablero], Jugador) :- !,
-    nl, write('Next move ?'), nl,
+    nl, write('Ingrese proximo movimiento'), nl,
     read(Pos), nl,  
     (
       movJugador([Jugador, play, Tablero], [ProximoJugador, Estado, NuevoTablero], Pos), !,
       show(NuevoTablero),
       (
-        Estado = win, !,                             % If Player win -> stop
-        nl, write('End of game : '),
-        write(Jugador), write(' win !'), nl, nl
+        Estado = win, !,                     
+        write(Jugador), write(' Gana'), nl, nl
         ;
-        Estado = draw, !,                            % If draw -> stop
+        Estado = draw, !,                           
         nl, write('End of game : '),
-        write(' draw !'), nl, nl
+        write(' Empate'), nl, nl
         ;
-        play([ProximoJugador, play, NuevoTablero], Jugador) % Else -> continue the game
+        play([ProximoJugador, play, NuevoTablero], Jugador) 
       )
       ;
-      write('-> Bad Move !'), nl,                % If humanMove fail -> bad move
-      play([Jugador, play, Tablero], Jugador)        % Ask again
+      write('Movimiento ilegal!'), nl,               
+      play([Jugador, play, Tablero], Jugador)       
     ).
 
 play([Player, play, Board], HumanPlayer) :-
-    nl, write('Computer play : '), nl, nl,
+    nl, write('Computadora: '), nl, nl,
     % Compute the best move
     bestMove([Player, play, Board], [NextPlayer, State, BestSuccBoard]),
     show(BestSuccBoard),
     (
-      State = win, !,                                 % If Player win -> stop
-      nl, write('End of game : '),
-      write(Player), write(' win !'), nl, nl
+      State = win, !,                                
+      write(Player), write('Gana'), nl, nl
       ;
-      State = draw, !,                                % If draw -> stop
-      nl, write('End of game : '), write(' draw !'), nl, nl
+      State = draw, !,                               
+      nl,write('Empate'), nl, nl
       ;
       % Else -> continue the game
       play([NextPlayer, play, BestSuccBoard], HumanPlayer)
