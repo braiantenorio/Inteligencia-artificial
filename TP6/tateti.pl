@@ -22,6 +22,9 @@ betterOf(Pos0, Val0, _, Val1, Pos0, Val0) :-   % Pos0 better than Pos1
 
 betterOf(_, _, Pos1, Val1, Pos1, Val1).        % Otherwise Pos1 better than Pos0
 
+bestMove(Pos, NextPos) :-
+    minimax(Pos, NextPos, _).
+
 play :- preguntarFicha.
 
 preguntarFicha:- nl, write('Elija ficha (x u o)'), nl,
@@ -37,12 +40,9 @@ play([Jugador, play, Tablero], Jugador) :- !,
       show(NuevoTablero),
       (
         Estado = win, !,                     
-        write(Jugador), write(' Gana'), nl, nl
-        ;
+        write(Jugador), write(' Gana'), nl, nl;
         Estado = draw, !,                           
-        nl, write('End of game : '),
-        write(' Empate'), nl, nl
-        ;
+        write(' Empate'), nl, nl;
         play([ProximoJugador, play, NuevoTablero], Jugador) 
       )
       ;
@@ -50,24 +50,21 @@ play([Jugador, play, Tablero], Jugador) :- !,
       play([Jugador, play, Tablero], Jugador)       
     ).
 
-play([Player, play, Board], HumanPlayer) :-
+play([Jugador, play, Tablero], HJugador) :-
     nl, write('Computadora: '), nl, nl,
-    % Compute the best move
-    bestMove([Player, play, Board], [NextPlayer, State, BestSuccBoard]),
-    show(BestSuccBoard),
+    bestMove([Jugador, play, Tablero], [ProxJugador, Estado, NuevoTablero]),
+    show(NuevoTablero),
     (
-      State = win, !,                                
-      write(Player), write('Gana'), nl, nl
+      Estado = win, !,                                
+      write(Jugador), write('Gana'), nl, nl
       ;
-      State = draw, !,                               
+      Estado = draw, !,                               
       nl,write('Empate'), nl, nl
       ;
-      % Else -> continue the game
-      play([NextPlayer, play, BestSuccBoard], HumanPlayer)
+      play([ProxJugador, play, NuevoTablero], HJugador)
     ).
 
-bestMove(Pos, NextPos) :-
-    minimax(Pos, NextPos, _).
+
   
 movJugador([X1, play, Tablero], [X2, Estado, NuevoTablero], Pos) :-
     proxJugador(X1, X2),
@@ -147,11 +144,6 @@ show([X1, X2, X3, X4, X5, X6, X7, X8, X9]) :-
     write(' | '), showAux(X8),
     write(' | '), showAux(X9), nl.
 
-
-
-% show2(+Term)
-% Write the term to current outupt
-% Replace 0 by ' '.
 showAux(X) :-
     X = 0, !,
     write(' ').
